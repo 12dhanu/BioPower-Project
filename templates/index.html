@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home | BioPower{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="tagline">RENEWABLE ENERGY • SMART TECHNOLOGY</p>
+
+        <h1>Turn Organic Waste Into <span>Clean Energy</span></h1>
+
+        <p>
+            Explore the potential of biogas generation and estimate
+            electricity production from organic waste using our
+            intelligent calculation platform.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{{ url_for('register') }}" class="btn">Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn secondary">
+                Login
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <h2>Our System Features</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Biogas Generation</h3>
+            <p>Estimate biogas production from different organic waste.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Power Generation</h3>
+            <p>Calculate possible electrical energy in kWh.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Smart Analytics</h3>
+            <p>Monitor generation records and energy statistics.</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

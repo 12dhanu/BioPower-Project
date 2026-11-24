@@ -1,0 +1,268 @@
+
+{% extends "base.html" %}
+
+{% block title %}Analytics | BioPower{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="tagline">ADVANCED PERFORMANCE MONITORING</p>
+    <h1>Generation Analytics</h1>
+    <p>Analyze your organic waste, biogas and electricity production.</p>
+</section>
+
+
+<!-- ANALYTICS SUMMARY -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-recycle"></i></div>
+        <p>Total Waste</p>
+        <h2>{{ total_waste }} kg</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+        <p>Total Biogas</p>
+        <h2>{{ total_biogas }} m³</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+        <p>Total Electricity</p>
+        <h2>{{ total_electricity }} kWh</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <p>Total Records</p>
+        <h2>{{ total_records }}</h2>
+    </div>
+
+</div>
+
+
+<!-- ENVIRONMENTAL IMPACT -->
+
+<div class="environment-card">
+    <div>
+        <p class="environment-label">SUSTAINABLE ENERGY ANALYSIS</p>
+        <h2>Estimated CO₂ Emissions Avoided</h2>
+        <p>
+            Estimated equivalent grid emissions avoided
+            through renewable electricity generation.
+        </p>
+    </div>
+
+    <div class="environment-value">
+        <h2>{{ environmental_impact }} kg</h2>
+        <span>Estimated CO₂ emissions avoided</span>
+    </div>
+</div>
+
+<p class="calculation-note">
+    Assumption: {{ emission_factor }} kg CO₂ per kWh of equivalent
+    grid electricity. This is an illustrative factor, not a verified
+    local grid measurement. Actual lifecycle emissions may differ.
+</p>
+
+
+<!-- CHARTS -->
+
+<div class="charts-grid">
+
+    <div class="chart-card">
+        <h3>Biogas Production by Waste Type</h3>
+        <p>Compare biogas generation across waste categories.</p>
+
+        <div class="chart-container">
+            <canvas id="biogasComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <h3>Electricity Production by Waste Type</h3>
+        <p>Compare electricity generated from each waste category.</p>
+
+        <div class="chart-container">
+            <canvas id="electricityComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-card chart-full">
+        <h3>Monthly Generation Analysis</h3>
+        <p>Compare monthly waste, biogas and electricity totals.</p>
+
+        <div class="chart-container">
+            <canvas id="monthlyChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- DETAILED DATA TABLE -->
+
+<div class="section-header">
+    <h2>Waste-wise Generation Details</h2>
+</div>
+
+<div class="table-container">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Waste Type</th>
+                <th>Total Waste (kg)</th>
+                <th>Biogas (m³)</th>
+                <th>Electricity (kWh)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.waste_type }}</td>
+                <td>{{ "%.2f"|format(record.total_waste) }}</td>
+                <td>{{ "%.2f"|format(record.total_biogas) }}</td>
+                <td>{{ "%.2f"|format(record.total_electricity) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No analytics data available yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const wasteLabels = {{ records | map(attribute='waste_type') | list | tojson }};
+
+const biogasValues = {{ records | map(attribute='total_biogas') | list | tojson }};
+
+const electricityValues = {{ records | map(attribute='total_electricity') | list | tojson }};
+
+const monthLabels = {{ monthly_data | map(attribute='month') | list | tojson }};
+
+const monthlyWaste = {{ monthly_data | map(attribute='total_waste') | list | tojson }};
+
+const monthlyBiogas = {{ monthly_data | map(attribute='total_biogas') | list | tojson }};
+
+const monthlyElectricity = {{ monthly_data | map(attribute='total_electricity') | list | tojson }};
+
+
+// Biogas comparison
+
+new Chart(document.getElementById("biogasComparisonChart"), {
+    type: "doughnut",
+    data: {
+        labels: wasteLabels,
+        datasets: [{
+            data: biogasValues,
+            backgroundColor: [
+                "#16864a",
+                "#45b96b",
+                "#92d9a5",
+                "#b9e8c5"
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
+
+
+// Electricity comparison
+
+new Chart(document.getElementById("electricityComparisonChart"), {
+    type: "bar",
+    data: {
+        labels: wasteLabels,
+        datasets: [{
+            label: "Electricity (kWh)",
+            data: electricityValues,
+            backgroundColor: "#269d56",
+            borderRadius: 7
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
+// Monthly generation comparison
+
+new Chart(document.getElementById("monthlyChart"), {
+    type: "line",
+    data: {
+        labels: monthLabels,
+        datasets: [
+            {
+                label: "Waste (kg)",
+                data: monthlyWaste,
+                borderColor: "#16864a",
+                backgroundColor: "rgba(22,134,74,0.1)",
+                tension: 0.3
+            },
+            {
+                label: "Biogas (m³)",
+                data: monthlyBiogas,
+                borderColor: "#e5a52a",
+                backgroundColor: "rgba(229,165,42,0.1)",
+                tension: 0.3
+            },
+            {
+                label: "Electricity (kWh)",
+                data: monthlyElectricity,
+                borderColor: "#3975ce",
+                backgroundColor: "rgba(57,117,206,0.1)",
+                tension: 0.3
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+            intersect: false,
+            mode: "index"
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+{% endblock %}

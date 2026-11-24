@@ -1,0 +1,158 @@
+
+{% extends "base.html" %}
+
+{% block title %}Calculator | BioPower{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="tagline">SMART ENERGY CALCULATOR</p>
+    <h1>Biogas & Power Generation</h1>
+    <p>Convert organic waste into estimated renewable energy.</p>
+</section>
+
+
+<div class="calculator-card">
+
+    <h2><i class="fa-solid fa-calculator"></i> Enter Waste Details</h2>
+
+    <form method="POST">
+
+        <label>Select Waste Type</label>
+
+        <select name="waste_type" required>
+            <option value="">Choose waste type</option>
+            <option value="Food Waste">Food Waste</option>
+            <option value="Cattle Dung">Cattle Dung</option>
+            <option value="Agricultural Waste">Agricultural Waste</option>
+            <option value="Kitchen Waste">Kitchen Waste</option>
+        </select>
+
+        <label>Organic Waste Quantity (kg)</label>
+
+        <input
+            type="number"
+            name="waste_quantity"
+            min="0.01"
+            step="0.01"
+            placeholder="Enter quantity in kilograms"
+            required
+        >
+
+        <button type="submit" class="btn full">
+            <i class="fa-solid fa-bolt"></i>
+            Calculate Generation
+        </button>
+
+    </form>
+
+</div>
+
+
+{% if result %}
+
+<section class="results-section">
+
+    <div class="section-header">
+        <h2>Generation Results</h2>
+        <span class="result-tag">Estimated Results</span>
+    </div>
+
+
+    <!-- ENERGY CONVERSION FLOW -->
+
+    <div class="energy-flow">
+
+        <div class="flow-step">
+            <div class="flow-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+            <h3>Organic Waste</h3>
+            <p>{{ result.waste_quantity }} kg</p>
+        </div>
+
+        <div class="flow-arrow">
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-icon">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+            <h3>Biogas</h3>
+            <p>{{ result.biogas_volume }} m³</p>
+        </div>
+
+        <div class="flow-arrow">
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-icon">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h3>Electricity</h3>
+            <p>{{ result.electricity_generated }} kWh</p>
+        </div>
+
+    </div>
+
+
+    <!-- RESULT CARDS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <p>Waste Type</p>
+            <h2 class="small-result">{{ result.waste_type }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Biogas Generated</p>
+            <h2>{{ result.biogas_volume }} m³</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Methane Percentage</p>
+            <h2>{{ result.methane_percentage }}%</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Methane Volume</p>
+            <h2>{{ result.methane_volume }} m³</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Generator Efficiency</p>
+            <h2>{{ result.generator_efficiency }}%</h2>
+        </div>
+
+        <div class="stat-card highlight-card">
+            <p>Electricity Generated</p>
+            <h2>{{ result.electricity_generated }} kWh</h2>
+        </div>
+
+    </div>
+
+
+    <div class="calculation-info">
+        <h3><i class="fa-solid fa-circle-info"></i> Understanding the Results</h3>
+
+        <p>
+            Organic waste is processed through anaerobic digestion
+            to produce biogas. The biogas contains methane, which
+            can be used as fuel in a generator to produce electricity.
+        </p>
+
+        <p>
+            These values are theoretical estimates based on the
+            configured waste yields, methane content and generator
+            efficiency. Actual plant performance may vary.
+        </p>
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

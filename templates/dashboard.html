@@ -1,0 +1,197 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | BioPower{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="tagline">ENERGY MONITORING SYSTEM</p>
+    <h1>Welcome, {{ current_user.full_name }}!</h1>
+    <p>Monitor your biogas and renewable electricity generation.</p>
+</section>
+
+<!-- SUMMARY CARDS -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-calculator"></i></div>
+        <p>Total Calculations</p>
+        <h2>{{ total_records }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-recycle"></i></div>
+        <p>Organic Waste Processed</p>
+        <h2>{{ total_waste }} kg</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+        <p>Biogas Generated</p>
+        <h2>{{ total_biogas }} m³</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+        <p>Electricity Generated</p>
+        <h2>{{ total_electricity }} kWh</h2>
+    </div>
+
+</div>
+
+
+<!-- ENVIRONMENTAL IMPACT -->
+
+<div class="environment-card">
+    <div>
+        <p class="environment-label">RENEWABLE ENERGY CONTRIBUTION</p>
+        <h2>Environmental Impact</h2>
+        <p>
+            Estimated emissions avoided by generating renewable
+            electricity instead of equivalent grid electricity.
+        </p>
+    </div>
+
+    <div class="environment-value">
+        <h2>{{ environmental_impact }} kg</h2>
+        <span>Estimated CO₂ emissions avoided</span>
+    </div>
+</div>
+
+
+<!-- CHARTS -->
+
+<div class="charts-grid">
+
+    <div class="chart-card">
+        <h3>Waste Type Comparison</h3>
+        <p>Biogas generation from different waste categories</p>
+
+        <div class="chart-container">
+            <canvas id="wasteChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <h3>Monthly Electricity Generation</h3>
+        <p>Electricity generated in each recorded month</p>
+
+        <div class="chart-container">
+            <canvas id="electricityChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- RECENT CALCULATIONS -->
+
+<div class="section-header">
+    <h2>Recent Calculations</h2>
+    <a href="{{ url_for('history') }}">View All</a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Waste Type</th>
+                <th>Waste (kg)</th>
+                <th>Biogas (m³)</th>
+                <th>Electricity (kWh)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.waste_type }}</td>
+                <td>{{ record.waste_quantity }}</td>
+                <td>{{ record.biogas_volume }}</td>
+                <td>{{ "%.2f"|format(record.electricity_generated) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No calculations available yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{{ url_for('calculator') }}" class="btn">
+    <i class="fa-solid fa-plus"></i>
+    Start New Calculation
+</a>
+
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const wasteLabels = {{ waste_data | map(attribute='waste_type') | list | tojson }};
+const biogasValues = {{ waste_data | map(attribute='total_biogas') | list | tojson }};
+const electricityValues = {{ monthly_data | map(attribute='electricity') | list | tojson }};
+const monthLabels = {{ monthly_data | map(attribute='month') | list | tojson }};
+
+new Chart(document.getElementById("wasteChart"), {
+    type: "doughnut",
+    data: {
+        labels: wasteLabels,
+        datasets: [{
+            label: "Biogas Generated",
+            data: biogasValues,
+            backgroundColor: [
+                "#16864a",
+                "#45b96b",
+                "#92d9a5",
+                "#b9e8c5"
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById("electricityChart"), {
+    type: "bar",
+    data: {
+        labels: monthLabels,
+        datasets: [{
+            label: "Electricity (kWh)",
+            data: electricityValues,
+            backgroundColor: "#269d56",
+            borderRadius: 7
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+{% endblock %}

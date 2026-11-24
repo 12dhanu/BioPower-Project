@@ -1,0 +1,716 @@
+
+/* ==================================
+   NEW BIOPOWER NAVIGATION DESIGN
+================================== */
+
+.navbar {
+    position: relative;
+    z-index: 1000;
+    min-height: 75px;
+    padding: 15px 7%;
+}
+
+.brand {
+    font-size: 28px;
+    letter-spacing: 0.5px;
+}
+
+.navigation {
+    position: relative;
+}
+
+.nav-menu {
+    position: relative;
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1e9d4d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    list-style: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.menu-button::-webkit-details-marker {
+    display: none;
+}
+
+.menu-button:hover {
+    background: #147a39;
+}
+
+.menu-button .arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.nav-menu[open] .arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    width: 230px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+    border: 1px solid #e3eee5;
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    color: #263c2e;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.dropdown-menu a i {
+    width: 20px;
+    color: #218b4b;
+}
+
+.dropdown-menu a:hover {
+    background: #eaf7ed;
+    color: #147a39;
+}
+
+.dropdown-menu a.active {
+    background: #dff3e5;
+    color: #126b35;
+    font-weight: bold;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #e2e9e3;
+    margin: 7px 5px;
+}
+
+.dropdown-menu a.logout-link {
+    color: #d34242;
+}
+
+.dropdown-menu a.logout-link i {
+    color: #d34242;
+}
+
+.dropdown-menu a.logout-link:hover {
+    background: #fff0f0;
+}
+
+.auth-navigation {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.auth-navigation a {
+    color: white;
+    text-decoration: none;
+}
+
+.auth-navigation a:hover {
+    color: #72dc8c;
+}
+
+.auth-navigation .nav-button {
+    background: #1e9d4d;
+    padding: 9px 17px;
+    border-radius: 7px;
+}
+
+/* Mobile and tablet adjustments */
+
+@media(max-width: 600px) {
+
+    .navbar {
+        padding: 14px 5%;
+    }
+
+    .brand {
+        font-size: 24px;
+    }
+
+    .menu-button {
+        padding: 11px 14px;
+    }
+
+    .dropdown-menu {
+        width: 210px;
+        right: 0;
+    }
+
+    .auth-navigation {
+        gap: 12px;
+        font-size: 13px;
+    }
+}
+
+/* =========================================
+   BIOPOWER ADVANCED DASHBOARD DESIGN
+========================================= */
+
+/* Improved statistic cards */
+
+.stat-card {
+    position: relative;
+    border: 1px solid #e5eee7;
+    border-left: 4px solid #25a653;
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 22px rgba(20, 100, 50, 0.10);
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #e5f5e9;
+    color: #16864a;
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+.stat-card h2 {
+    overflow-wrap: anywhere;
+}
+
+.small-result {
+    font-size: 19px !important;
+}
+
+
+/* Environmental impact */
+
+.environment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: linear-gradient(120deg, #123c2b, #287d4a);
+    color: white;
+    border-radius: 14px;
+    padding: 28px;
+    margin: 30px 0;
+}
+
+.environment-card h2 {
+    font-size: 25px;
+    margin: 8px 0;
+}
+
+.environment-card p {
+    color: #e0f1e5;
+    max-width: 580px;
+}
+
+.environment-label {
+    color: #a5e7b6 !important;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.environment-value {
+    text-align: right;
+    min-width: 180px;
+}
+
+.environment-value h2 {
+    color: #8ff0aa;
+    font-size: 32px;
+}
+
+.environment-value span {
+    color: #e0f1e5;
+    font-size: 13px;
+}
+
+.calculation-note {
+    color: #6c786f;
+    font-size: 13px;
+    margin: -18px 0 28px;
+}
+
+
+/* Chart layout */
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin: 30px 0;
+}
+
+.chart-card {
+    background: white;
+    border: 1px solid #e5eee7;
+    border-radius: 13px;
+    padding: 24px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+    min-width: 0;
+}
+
+.chart-card h3 {
+    color: #214a31;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.chart-card > p {
+    color: #7a897e;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.chart-container {
+    position: relative;
+    height: 290px;
+    width: 100%;
+}
+
+.chart-full {
+    grid-column: 1 / -1;
+}
+
+
+/* Calculator result styling */
+
+.result-tag {
+    background: #e3f6e9;
+    color: #16763b;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.energy-flow {
+    background: white;
+    border: 1px solid #e5eee7;
+    border-radius: 13px;
+    padding: 28px 18px;
+    margin: 22px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.flow-step {
+    text-align: center;
+    flex: 1;
+}
+
+.flow-icon {
+    width: 65px;
+    height: 65px;
+    background: #e5f5e9;
+    color: #16864a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    margin: 0 auto 12px;
+}
+
+.flow-step h3 {
+    font-size: 16px;
+    color: #234a31;
+}
+
+.flow-step p {
+    color: #16864a;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.flow-arrow {
+    color: #25a653;
+    font-size: 22px;
+}
+
+.calculation-info {
+    background: #eaf5ed;
+    border-left: 4px solid #269d56;
+    padding: 22px;
+    margin-top: 25px;
+    border-radius: 9px;
+}
+
+.calculation-info h3 {
+    color: #176b32;
+    margin-bottom: 12px;
+}
+
+.calculation-info p {
+    color: #53665a;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.calculation-info p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Responsive layout */
+
+@media(max-width: 850px) {
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-full {
+        grid-column: auto;
+    }
+
+    .environment-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .environment-value {
+        text-align: left;
+    }
+}
+
+@media(max-width: 600px) {
+
+    .energy-flow {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-step {
+        width: 100%;
+    }
+
+    .chart-card {
+        padding: 17px;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .environment-card {
+        padding: 20px;
+    }
+
+    .environment-value h2 {
+        font-size: 27px;
+    }
+}
+
+/* =========================================
+   BIOPOWER STAGE 10 - HISTORY PAGE
+========================================= */
+
+.history-filter-card,
+.history-export-card {
+    background: white;
+    border: 1px solid #e5eee7;
+    border-radius: 13px;
+    padding: 24px;
+    margin: 22px 0;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+}
+
+.history-filter-card h2,
+.history-export-card h2 {
+    color: #214a31;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.history-filter-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: end;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-field label {
+    color: #344c3a;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.filter-field input,
+.filter-field select {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px;
+    border: 1px solid #d7e5da;
+    border-radius: 7px;
+    background: white;
+    color: #263c2e;
+    outline: none;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+    border-color: #1e9d4d;
+    box-shadow: 0 0 0 3px rgba(30, 157, 77, 0.10);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.history-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.apply-btn {
+    background: #1e9d4d;
+    color: white;
+}
+
+.apply-btn:hover {
+    background: #147a39;
+}
+
+.clear-btn {
+    background: #edf2ee;
+    color: #405547;
+}
+
+.clear-btn:hover {
+    background: #dce8df;
+}
+
+.history-export-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.history-export-card h2 {
+    margin-bottom: 7px;
+}
+
+.history-export-card p {
+    color: #738176;
+    font-size: 14px;
+}
+
+.export-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pdf-btn {
+    background: #d94848;
+    color: white;
+}
+
+.pdf-btn:hover {
+    background: #b92f2f;
+}
+
+.csv-btn {
+    background: #218b4b;
+    color: white;
+}
+
+.csv-btn:hover {
+    background: #176b38;
+}
+
+.history-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0 15px;
+    gap: 12px;
+}
+
+.history-count h3 {
+    color: #214a31;
+    font-size: 20px;
+}
+
+.history-count span {
+    color: #16864a;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.history-table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5eee7;
+}
+
+.history-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background: #176b3a;
+    color: white;
+    padding: 15px 12px;
+    text-align: left;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.history-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf1ed;
+    color: #45564a;
+    font-size: 13px;
+}
+
+.history-table tbody tr:hover {
+    background: #f5faf6;
+}
+
+.waste-type-label {
+    display: inline-block;
+    background: #e7f5eb;
+    color: #176b3a;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.electricity-value {
+    color: #16864a;
+}
+
+.delete-record-btn {
+    background: #fff0f0;
+    color: #cf3838;
+    border: 1px solid #f3cccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.delete-record-btn:hover {
+    background: #cf3838;
+    color: white;
+}
+
+.empty-history {
+    text-align: center !important;
+    padding: 45px 15px !important;
+}
+
+.empty-history > i {
+    font-size: 35px;
+    color: #7ca58a;
+    margin-bottom: 12px;
+}
+
+.empty-history h3 {
+    color: #214a31;
+    margin-bottom: 8px;
+}
+
+.empty-history p {
+    color: #7a897e;
+    margin-bottom: 14px;
+}
+
+.empty-history a {
+    color: #16864a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* Responsive history layout */
+
+@media(max-width: 850px) {
+    .history-filter-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .history-export-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 600px) {
+    .history-filter-card,
+    .history-export-card {
+        padding: 17px;
+    }
+
+    .history-filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-buttons,
+    .export-buttons {
+        width: 100%;
+    }
+
+    .filter-buttons .history-btn,
+    .export-buttons .history-btn {
+        flex: 1;
+    }
+
+    .history-count {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

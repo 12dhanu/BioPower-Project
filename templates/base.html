@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}BioPower{% endblock %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+
+        <a href="{{ url_for('index') }}" class="brand">
+            Bio<span>Power</span>
+        </a>
+
+        {% if current_user.is_authenticated %}
+
+        <div class="navigation">
+
+            <details class="nav-menu">
+
+                <summary class="menu-button">
+                    <i class="fa-solid fa-bars"></i>
+                    <span>Menu</span>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </summary>
+
+                <div class="dropdown-menu">
+
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="{{ url_for('calculator') }}">
+                        <i class="fa-solid fa-calculator"></i>
+                        Calculator
+                    </a>
+
+                    <a href="{{ url_for('analytics') }}">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        Analytics
+                    </a>
+
+                    <a href="{{ url_for('history') }}">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        History
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="{{ url_for('logout') }}" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+
+                </div>
+
+            </details>
+
+        </div>
+
+        {% else %}
+
+        <div class="auth-navigation">
+
+            <a href="{{ url_for('index') }}">Home</a>
+
+            <a href="{{ url_for('login') }}">Login</a>
+
+            <a href="{{ url_for('register') }}" class="nav-button">
+                Register
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            BioPower | Biogas and Renewable Electricity Generation System
+        </p>
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
